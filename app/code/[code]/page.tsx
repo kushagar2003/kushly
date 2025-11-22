@@ -1,14 +1,16 @@
 interface PageProps {
-  params: { code: string };
+  params: { code: string } | Promise<{ code: string }>;
 }
 
 export default async function StatsPage({ params }: PageProps) {
-  const { code } = params;
+  const { code } = await Promise.resolve(params);
 
   const base =
-    process.env.NEXT_PUBLIC_BASE_URL ||
-    (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "http://localhost:3000");
-
+  process.env.NEXT_PUBLIC_BASE_URL ??
+  (typeof window === "undefined"
+    ? "http://localhost:3000"
+    : window.location.origin);
+    
   const res = await fetch(`${base}/api/links/${code}`, {
     cache: "no-store",
   });

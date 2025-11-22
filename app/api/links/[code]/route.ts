@@ -1,14 +1,14 @@
 import { db } from "@/lib/db";
 
 interface RouteProps {
-  params: { code: string };
+  params: { code: string } | Promise<{ code: string }>;
 }
 
 // GET /api/links/:code
 export async function GET(req: Request, { params }: RouteProps) {
-  try {
-    const { code } = params;
+  const { code } = await Promise.resolve(params);
 
+  try {
     const result = await db.query(
       `SELECT code, url, clicks, created_at, last_clicked
        FROM links
@@ -30,9 +30,9 @@ export async function GET(req: Request, { params }: RouteProps) {
 
 // DELETE /api/links/:code
 export async function DELETE(req: Request, { params }: RouteProps) {
-  try {
-    const { code } = params;
+  const { code } = await Promise.resolve(params);
 
+  try {
     const result = await db.query(
       `DELETE FROM links
        WHERE code = $1
