@@ -31,31 +31,17 @@ export default async function StatsPage({ params }: PageProps) {
       <div className="p-4 border rounded space-y-2">
         <div>
           <strong>Original URL:</strong>
-          <div>
-            <a href={data.url} className="text-blue-600 underline" target="_blank">
-              {data.url}
-            </a>
-          </div>
+          <a href={data.url} className="text-blue-600 underline" target="_blank">
+            {data.url}
+          </a>
         </div>
 
-        <p>
-          <strong>Total Clicks:</strong> {data.clicks}
-        </p>
-
-        <p>
-          <strong>Created:</strong>{" "}
-          {new Date(data.created_at).toLocaleString()}
-        </p>
-
-        <p>
-          <strong>Last Clicked:</strong>{" "}
-          {data.last_clicked ? new Date(data.last_clicked).toLocaleString() : "—"}
-        </p>
+        <p><strong>Total Clicks:</strong> {data.clicks}</p>
+        <p><strong>Created:</strong> {new Date(data.created_at).toLocaleString()}</p>
+        <p><strong>Last Clicked:</strong> {data.last_clicked ? new Date(data.last_clicked).toLocaleString() : "—"}</p>
       </div>
 
-      <a href="/" className="text-blue-600 underline">
-        ← Back to Dashboard
-      </a>
+      <a href="/" className="text-blue-600 underline">← Back to Dashboard</a>
     </main>
   );
 }

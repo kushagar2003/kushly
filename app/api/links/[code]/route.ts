@@ -4,9 +4,7 @@ interface RouteProps {
   params: { code: string };
 }
 
-/**
- * GET /api/links/:code
- */
+// GET /api/links/:code
 export async function GET(req: Request, { params }: RouteProps) {
   try {
     const { code } = params;
@@ -30,9 +28,7 @@ export async function GET(req: Request, { params }: RouteProps) {
   }
 }
 
-/**
- * DELETE /api/links/:code
- */
+// DELETE /api/links/:code
 export async function DELETE(req: Request, { params }: RouteProps) {
   try {
     const { code } = params;
