@@ -1,9 +1,9 @@
 import { db } from "@/lib/db";
 import { NextRequest } from "next/server";
 
-export async function GET(req: NextRequest, context: { params: { code: string } }) {
-  // If context.params is a Promise in your Next.js version, await it:
-  const { code } = context.params;
+export async function GET(req: NextRequest, context: { params: Promise<{ code: string }> }) {
+  // Await the params promise
+  const { code } = await context.params;
 
   try {
     const result = await db.query(

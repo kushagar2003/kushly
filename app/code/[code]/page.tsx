@@ -6,14 +6,15 @@ export default async function StatsPage({ params }: PageProps) {
   const { code } = await Promise.resolve(params);
 
   const base =
-  process.env.NEXT_PUBLIC_BASE_URL ??
-  (typeof window === "undefined"
-    ? "http://localhost:3000"
-    : window.location.origin);
-    
+    process.env.NEXT_PUBLIC_BASE_URL ??
+    (
+      typeof process.env.VERCEL_URL === "string" ? `https://${process.env.VERCEL_URL}` : "http://localhost:3000"
+    );
+
   const res = await fetch(`${base}/api/links/${code}`, {
-    cache: "no-store",
+    cache: "no-store"
   });
+
 
   if (res.status === 404) {
     return (
