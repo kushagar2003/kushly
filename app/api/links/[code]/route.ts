@@ -5,10 +5,13 @@ interface RouteProps {
 }
 
 // GET /api/links/:code
-export async function GET(req: Request, context: RouteProps) {
-  try {
-    const { code } = await context.params; // await the promise
+export async function GET(
+  req: Request,
+  { params }: RouteProps
+) {
+  const { code } = await params; // await the Promise
 
+  try {
     const result = await db.query(
       `SELECT code, url, clicks, created_at, last_clicked
        FROM links
@@ -29,10 +32,13 @@ export async function GET(req: Request, context: RouteProps) {
 }
 
 // DELETE /api/links/:code
-export async function DELETE(req: Request, context: RouteProps) {
-  try {
-    const { code } = await context.params; // await the promise
+export async function DELETE(
+  req: Request,
+  { params }: RouteProps
+) {
+  const { code } = await params; // await the Promise
 
+  try {
     const result = await db.query(
       `DELETE FROM links
        WHERE code = $1
