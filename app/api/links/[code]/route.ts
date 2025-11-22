@@ -1,16 +1,15 @@
 import { db } from "@/lib/db";
 
 interface RouteProps {
-  params: Promise<{ code: string }>;
+  params: { code: string };
 }
 
 /**
  * GET /api/links/:code
- * Returns stats for a single link
  */
 export async function GET(req: Request, { params }: RouteProps) {
   try {
-    const { code } = await params;
+    const { code } = params;
 
     const result = await db.query(
       `SELECT code, url, clicks, created_at, last_clicked
@@ -25,7 +24,6 @@ export async function GET(req: Request, { params }: RouteProps) {
     }
 
     return Response.json(result.rows[0], { status: 200 });
-
   } catch (err) {
     console.error("GET /api/links/:code error:", err);
     return Response.json({ error: "Server error" }, { status: 500 });
@@ -34,11 +32,10 @@ export async function GET(req: Request, { params }: RouteProps) {
 
 /**
  * DELETE /api/links/:code
- * Deletes a link by short code
  */
 export async function DELETE(req: Request, { params }: RouteProps) {
   try {
-    const { code } = await params;
+    const { code } = params;
 
     const result = await db.query(
       `DELETE FROM links
@@ -52,7 +49,6 @@ export async function DELETE(req: Request, { params }: RouteProps) {
     }
 
     return Response.json({ deleted: true }, { status: 200 });
-
   } catch (err) {
     console.error("DELETE /api/links/:code error:", err);
     return Response.json({ error: "Server error" }, { status: 500 });
