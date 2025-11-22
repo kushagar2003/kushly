@@ -28,9 +28,10 @@ export async function POST(req: Request) {
       [finalCode]
     );
 
-    if (exists.rowCount > 0) {
+    if (exists && exists.rowCount > 0) {
       return Response.json({ error: "Code already exists" }, { status: 409 });
     }
+
 
     await db.query(
       `INSERT INTO links (code, url) VALUES ($1, $2)`,
