@@ -3,9 +3,9 @@ import { NextRequest } from "next/server";
 
 export async function GET(
   req: NextRequest,
-  context: { params: Promise<{ code: string }> }
+  context: { params: { code: string } } // NOT Promise
 ) {
-  const { code } = await context.params; // await the Promise
+  const { code } = context.params; // just extract directly
 
   try {
     const result = await db.query(
