@@ -1,7 +1,8 @@
 import { db } from "@/lib/db";
+import { NextRequest } from "next/server";
 
-export async function GET(req: Request, { params }: { params: { code: string } }) {
-  const { code } = params;
+export async function GET(req: NextRequest, context: { params: { code: string } }) {
+  const { code } = context.params;
 
   try {
     const result = await db.query(
